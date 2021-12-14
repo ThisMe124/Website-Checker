@@ -59,7 +59,8 @@ app.get("/webcheck2", async (req,res) => {
    } 
    res.json({ 
         domain: url, 
-        status: resp 
+        status: resp, 
+        message: `Recommended Used`
     })
 })
 
