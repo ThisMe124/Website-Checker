@@ -1,0 +1,24 @@
+{
+  "name": "WebUp",
+  "version": "1.0.0",
+  "description": "Check Up/Down Websiter",
+  "exports": "./index.js",
+  "type": "module",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Created By ThisMe124",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "is-up": "^5.0.0",
+    "node-fetch": "^2.6.4"
+  }
+}
