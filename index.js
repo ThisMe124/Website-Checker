@@ -33,12 +33,12 @@ app.get("/webcheck", async (req, res) => {
    if (statusResult) {
       res.json({
          domain: url,
-         status: "Site is Running (200) OK",
+         status: "Site is Running (200) OK"
       });
    } else {
       res.json({
          domain: url,
-         status: "Site is Down (500) Not Ok",
+         status: "Site is Down (500) Not OK"
       });
    }
 });
