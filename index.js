@@ -4,8 +4,11 @@
 import express from 'express'
 import isUp from 'is-up'
 import bodyparser from 'body-parser'
+import isReachable from 'is-reachable'
 const PORT = 9000;
 const app = express();
+import pinger from "simple-website-pinger"
+pinger.ping("https://webcheck.user404040404.repl.co")
 app.set("view engine", "ejs")
 app.use(bodyparser.urlencoded({
    extended: false
@@ -18,7 +21,7 @@ const isUrl = (url) => {
     return url.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/, 'gi'))
 }
 
-//Web Checker API
+//Web Check API V1
 app.get("/webcheck", async (req, res) => {
   var url = req.query.domain
   if (!url) return res.status(400).json({
@@ -27,7 +30,7 @@ app.get("/webcheck", async (req, res) => {
     })
     if (!isUrl(url)) return res.status(400).json({
         status: false,
-        message: "Please enter a valid url"
+        message: "Please enter url"
     })
    var statusResult = await isUp(url);
    if (statusResult) {
@@ -42,6 +45,25 @@ app.get("/webcheck", async (req, res) => {
       });
    }
 });
+
+//Web Check API V2
+app.get("/webcheck2", async (req,res) => {
+  var url = req.query.domain
+  if (!url) return res.status(400).json({
+        status: false,
+        message: "Enter domain parameters"
+    })
+  var resp = await isReachable(url)
+  if (resp === true) {
+   resp = "Site is Running (200) OK"
+   } else if (resp === false) {
+   resp = "Site is Down (500) Not OK"
+   } 
+   res.json({ 
+        domain: url, 
+        status: resp 
+    })
+})
 
 app.get("/", async (req,res) => {
    res.send("200 OK")
