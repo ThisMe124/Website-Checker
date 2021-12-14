@@ -23,11 +23,11 @@ app.get("/webcheck", async (req, res) => {
   var url = req.query.domain
   if (!url) return res.status(400).json({
         status: false,
-        message: "Masukkan parameter domain"
+        message: "Enter domain parameters"
     })
     if (!isUrl(url)) return res.status(400).json({
         status: false,
-        message: "Harap masukkan url yang valid"
+        message: "Please enter a valid url"
     })
    var statusResult = await isUp(url);
    if (statusResult) {
