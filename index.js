@@ -34,12 +34,14 @@ app.get("/webcheck", async (req, res) => {
    if (statusResult) {
       res.json({
          domain: url,
-         status: "Site is Running (200) OK"
+         status: "Site is Running (200) OK",
+         github: "https://github.com/ThisMe124/Website-Checker"
       });
    } else {
       res.json({
          domain: url,
-         status: "Site is Down (500) Not OK"
+         status: "Site is Down (500) Not OK",
+         github: "https://github.com/ThisMe124/Website-Checker"
       });
    }
 });
@@ -59,13 +61,17 @@ app.get("/webcheck2", async (req,res) => {
    } 
    res.json({ 
         domain: url, 
-        status: resp, 
+        status: resp,
+        github: "https://github.com/ThisMe124/Website-Checker",
         message: `Recommended Used`
     })
 })
 
 app.get("/", async (req,res) => {
-   res.send("200 OK")
+   res.json({
+   result: "200 OK",
+   github: "https://github.com/ThisMe124/Website-Checker"
+   })
 })
 
 app.use(function (err, req, res, next) {
