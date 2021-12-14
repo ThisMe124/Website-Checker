@@ -44,7 +44,7 @@ app.get("/webcheck", async (req, res) => {
    }
 });
 
-//Web Check API V2
+//Web Check API V2 (Recommended)
 app.get("/webcheck2", async (req,res) => {
   var url = req.query.domain
   if (!url) return res.status(400).json({
