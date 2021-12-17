@@ -5,6 +5,7 @@ import express from 'express'
 import isUp from 'is-up'
 import bodyparser from 'body-parser'
 import isReachable from 'is-reachable'
+import { bahasa_planet } from 'bahasa-planet'
 const PORT = 9000;
 const app = express();
 app.set("view engine", "ejs")
@@ -65,6 +66,26 @@ app.get("/webcheck2", async (req,res) => {
         github: "https://github.com/ThisMe124/Website-Checker",
         message: `Recommended Used`
     })
+})
+
+// Bonus Hehe :)
+app.get("/bahasa/planet", async(req, res) => {
+try {
+var text = req.query.text
+var alias = req.query.alias
+if (!text) return res.status(400).json({
+status: false,
+message: "Enter text parameters"
+})
+if (!alias) return res.status(400).json({
+status: false,
+message: "Enter alias parameters"
+})
+let pop = bahasa_planet(text, alias)
+res.json({ result: pop })
+} catch(err) {
+res.json({ info: err.message })
+}
 })
 
 app.get("/", async (req,res) => {
