@@ -55,6 +55,7 @@ app.get("/webcheck2", async (req,res) => {
         message: "Enter domain parameters"
     })
   var resp = await isReachable(url)
+  var wdoh = await isReachable(url)
   if (resp === true) {
    resp = "Site is Running (200) OK"
    } else if (resp === false) {
@@ -63,6 +64,7 @@ app.get("/webcheck2", async (req,res) => {
    res.json({ 
         domain: url, 
         status: resp,
+        status_web: wdoh,
         github: "https://github.com/ThisMe124/Website-Checker",
         message: `Recommended Used`
     })
