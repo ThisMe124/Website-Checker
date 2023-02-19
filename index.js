@@ -6,6 +6,7 @@ import isUp from 'is-up'
 import bodyparser from 'body-parser'
 import isReachable from 'is-reachable'
 import { bahasa_planet } from 'bahasa-planet'
+import dns from 'dns'
 const PORT = 9000;
 const app = express();
 app.set("view engine", "ejs")
@@ -70,6 +71,29 @@ app.get("/webcheck2", async (req,res) => {
     })
 })
 
+app.get("/isavailable", async (req,res) => {
+  var url = req.query.domain
+  if (!url) return res.status(400).json({
+        status: false,
+        message: "Enter domain parameters"
+    })
+  var resp = await checkDomain(url)
+  var wdoh = await checkDomain(url)
+  if (resp === true) {
+   resp = "available"
+   } else if (resp === false) {
+   resp = "unavailable"
+   } 
+   res.json({ 
+        domain: url, 
+        status: resp,
+        status_web: wdoh,
+        github: "https://github.com/ThisMe124/Website-Checker",
+        message: `Recommended Used`
+    })
+})
+
+
 // Bonus Hehe :)
 app.get("/bahasa/planet", async(req, res) => {
 try {
@@ -101,6 +125,19 @@ app.use(function (err, req, res, next) {
     console.error(err.stack)
     res.status(500).send('Something broke!')
 })
+
+
+async function checkDomain(domain) {
+  return new Promise((resolve, reject) => {
+    dns.resolve(domain, (err) => {
+      if (err) {
+        resolve(false);
+      } else {
+        resolve(true);
+      }
+    });
+  });
+}
 
 app.listen(PORT, () => {
    console.log(`App is listening on Port ${PORT}`);
