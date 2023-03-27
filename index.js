@@ -1,6 +1,3 @@
-//Source Ori From https://codingshiksha.com/javascript/node-js-express-bulk-website-url-up-down-status-checker-using-is-up-library-full-project-for-beginners/
-//Recode By Me :)
-
 import express from 'express'
 import isUp from 'is-up'
 import bodyparser from 'body-parser'
@@ -16,7 +13,6 @@ app.use(bodyparser.urlencoded({
 app.use(bodyparser.json());
 app.set('json spaces', 2)
 
-//Is Url Valid Or Not Module
 const isUrl = (url) => {
     return url.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/, 'gi'))
 }
