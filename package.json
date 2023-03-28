@@ -19,6 +19,7 @@
     "body-parser": "^1.19.1",
     "is-reachable": "^5.1.1",
     "is-up": "^5.0.0",
+    "axios": "latest",
     "bahasa-planet": "^0.0.2"
   }
 }
