@@ -27,7 +27,7 @@ app.get("/check_domain", async (req, res) => {
     })
  try {
    var result = await axios.get(`https://cdntelegf.vercel.app/checkdomain?domain=${url}`)
-   res.status(200).json({ info: "Check Domain Is Available Or Not To Buy Or Register", github: "https://github.com/ThisMe124/Website-Checker", result.data })
+   res.status(200).json({ info: "Check Domain Is Available Or Not To Buy Or Register", github: "https://github.com/ThisMe124/Website-Checker", redult: result.data })
  } catch(e) {
    res.status(400).json({ status: "error", message: "Error From Server Bro...", /*info: e.message*/ })
  }
