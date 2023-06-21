@@ -8,4 +8,4 @@ a project which checks whether a website is down or not :)
 4. http://webcheck-ruddy.vercel.app/isdown/v3?domain=https://example.com
 
 ## NEW ##
-1. http://webcheck-ruddy.vercel.app/check_domain/response?domain=https://example.com
+1. http://webcheck-ruddy.vercel.app/check_domain/response?url=https://example.com
