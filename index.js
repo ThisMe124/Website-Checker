@@ -33,39 +33,59 @@ app.get("/check_domain", async (req, res) => {
  }
 });
 
-//Web Check API V1
-app.get("/webcheck", async (req, res) => {
+//Web Check API V1 ( Recommended )
+app.get('/isdown/v1', async(req, res) => {
+try {
   var url = req.query.domain
   if (!url) return res.status(400).json({
         status: false,
-        message: "Enter domain parameters"
+        message: "Enter domain query"
     })
-    if (!isUrl(url)) return res.status(400).json({
-        status: false,
-        message: "Please enter url"
-    })
-   var statusResult = await isUp(url);
-   if (statusResult) {
-      res.json({
-         domain: url,
-         status: "Site is Running (200) OK",
-         github: "https://github.com/ThisMe124/Website-Checker"
-      });
-   } else {
-      res.json({
-         domain: url,
-         status: "Site is Down (500) Not OK",
-         github: "https://github.com/ThisMe124/Website-Checker"
-      });
-   }
-});
+  const response = await axios.head(url) 
+   res.json({ 
+     status: true,
+     status_code: response.status, 
+     info_error: null,
+     github: "https://github.com/ThisMe124/Website-Checker"
+   }) 
+  } catch(error) {
+  if(error.response) {
+     res.json({ 
+       status: false, 
+       status_code: error.response.status, 
+       info_error: null,
+       github: "https://github.com/ThisMe124/Website-Checker"
+     })
+  } else if (error.code === 'ECONNABORTED') {
+     res.json({ 
+       status: 'timeout', 
+       status_code: null, 
+       info_error: error.message
+     })
+  } else {
+     res.json({ 
+       status: 'Unknow Error', 
+       status_code: null, 
+       info_error: 
+       error.message
+     })
+    }
+  }
+// handle if the error reaches the server.
+}, (error, req, res, next) => {
+    res.json({ 
+       status: 'Unknow Error', 
+       status_code: null, 
+       info_error: error.message
+     })
+})
 
-//Web Check API V2 (Recommended)
-app.get("/webcheck2", async (req,res) => {
+//Web Check API V2 ( Recommended )
+app.get("/isdown/v2", async (req,res) => {
   var url = req.query.domain
   if (!url) return res.status(400).json({
         status: false,
-        message: "Enter domain parameters"
+        message: "Enter domain query"
     })
   var resp = await isReachable(url)
   var wdoh = await isReachable(url)
@@ -79,32 +99,97 @@ app.get("/webcheck2", async (req,res) => {
         status: resp,
         status_web: wdoh,
         github: "https://github.com/ThisMe124/Website-Checker",
-        message: `Recommended Used`
     })
+// handle if the error reaches the server.
+}, (error, req, res, next) => {
+    res.json({ 
+       status: 'Unknow Error', 
+       status_code: null, 
+       info_error: error.message
+     })
 })
 
-app.get("/isavailable", async (req,res) => {
+//Web Check API V3 ( the same as v1 but the difference is the get method and recommended to use )
+app.get('/isdown/v3', async(req, res) => {
+try {
   var url = req.query.domain
   if (!url) return res.status(400).json({
         status: false,
-        message: "Enter domain parameters"
+        message: "Enter domain query"
     })
-  var resp = await checkDomain(url)
-  var wdoh = await checkDomain(url)
-  if (resp === true) {
-   resp = "available"
-   } else if (resp === false) {
-   resp = "unavailable"
-   } 
+  const response = await axios.get(url) 
    res.json({ 
-        domain: url, 
-        status: resp,
-        status_web: wdoh,
-        github: "https://github.com/ThisMe124/Website-Checker",
-        message: `Recommended Used`
-    })
+     status: true,
+     status_code: response.status, 
+     info_error: null,
+     github: "https://github.com/ThisMe124/Website-Checker"
+   }) 
+  } catch(error) {
+  if(error.response) {
+     res.json({ 
+       status: false, 
+       status_code: error.response.status, 
+       info_error: null,
+       github: "https://github.com/ThisMe124/Website-Checker"
+     })
+  } else if (error.code === 'ECONNABORTED') {
+     res.json({ 
+       status: 'timeout', 
+       status_code: null, 
+       info_error: error.message
+     })
+  } else {
+     res.json({ 
+       status: 'Unknow Error', 
+       status_code: null, 
+       info_error: 
+       error.message
+     })
+    }
+  }
+// handle if the error reaches the server.
+}, (error, req, res, next) => {
+    res.json({ 
+       status: 'Unknow Error', 
+       status_code: null, 
+       info_error: error.message
+     })
 })
 
+// [ NEW ] check a response from url and get a content.
+app.get('/check_domain/response', async(req, res) => {
+if(!req.query.url) return res.json({ status: false, info: 'please input query url' })
+try {
+const response = await axios.get(req.query.url) 
+res.json({ 
+  status: true, 
+  results: response.data, 
+  status_code: response.status, 
+  info_error: null 
+ }) 
+} catch(error) {
+  if(error.response) {
+     res.json({ 
+       status: false, 
+       status_code: error.response.status, 
+       info_error: null
+     })
+    } else {
+     res.json({ 
+       status: 'Unknow Error', 
+       status_code: null, 
+       info_error: error.message
+     })
+    } 
+  }
+// handle if the error reaches the server.
+}, (error, req, res, next) => {
+    res.json({ 
+       status: 'Unknow Error', 
+       status_code: null, 
+       info_error: error.message
+     })
+})
 
 // Bonus Hehe :)
 app.get("/bahasa/planet", async(req, res) => {
