@@ -3,7 +3,6 @@ import isUp from 'is-up'
 import bodyparser from 'body-parser'
 import isReachable from 'is-reachable'
 import { bahasa_planet } from 'bahasa-planet'
-import dns from 'dns'
 import axios from 'axios'
 const PORT = 9000;
 const app = express();
@@ -17,21 +16,6 @@ app.set('json spaces', 2)
 const isUrl = (url) => {
     return url.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/, 'gi'))
 }
-
-//Check Domain Is Available Or Not To Buy Or Register
-app.get("/check_domain", async (req, res) => {
-  var url = req.query.domain
-  if (!url) return res.status(400).json({
-        status: false,
-        message: "Enter domain parameters"
-    })
- try {
-   var result = await axios.get(`https://cdntelegf.vercel.app/checkdomain?domain=${url}`)
-   res.status(200).json({ info: "Check Domain Is Available Or Not To Buy Or Register", github: "https://github.com/ThisMe124/Website-Checker", redult: result.data.response })
- } catch(e) {
-   res.status(400).json({ status: "error", message: "Error From Server Bro...", /*info: e.message*/ })
- }
-});
 
 //Web Check API V1 ( Recommended )
 app.get('/isdown/v1', async(req, res) => {
@@ -223,18 +207,6 @@ app.use(function (err, req, res, next) {
     res.status(500).send('Something broke!')
 })
 
-
-async function checkDomain(domain) {
-  return new Promise((resolve, reject) => {
-    dns.resolve(domain, (err) => {
-      if (err) {
-        resolve(false);
-      } else {
-        resolve(true);
-      }
-    });
-  });
-}
 
 app.listen(PORT, () => {
    console.log(`App is listening on Port ${PORT}`);
