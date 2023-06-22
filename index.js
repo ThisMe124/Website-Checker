@@ -147,7 +147,7 @@ try {
 const response = await axios.get(req.query.url) 
 res.json({ 
   status: true, 
-  results: response.data, 
+  content_data: response.data, 
   status_code: response.status, 
   info_error: null 
  }) 
@@ -155,7 +155,7 @@ res.json({
   if(error.response) {
      res.json({ 
        status: false, 
-       results: error.response.data,
+       conten_data: error.response.data,
        status_code: error.response.status, 
        info_error: null
      })
