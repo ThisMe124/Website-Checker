@@ -161,7 +161,8 @@ res.json({
      })
     } else {
      res.json({ 
-       status: 'Unknow Error', 
+       status: 'Unknow Error',
+       status_a: false, 
        status_code: null, 
        info_error: error.message
      })
