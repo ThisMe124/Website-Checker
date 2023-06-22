@@ -155,7 +155,7 @@ res.json({
   if(error.response) {
      res.json({ 
        status: false, 
-       results: response.data,
+       results: error.response.data,
        status_code: error.response.status, 
        info_error: null
      })
