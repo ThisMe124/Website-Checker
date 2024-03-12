@@ -28,6 +28,7 @@ try {
   const response = await axios.head(url) 
    res.json({ 
      status: true,
+     response: "Website is Up (Online)",
      status_code: response.status, 
      info_error: null,
      github: "https://github.com/ThisMe124/Website-Checker"
@@ -35,21 +36,24 @@ try {
   } catch(error) {
   if(error.response) {
      res.json({ 
-       status: false, 
-       status_code: error.response.status, 
+       status: false,
+       response: "Website is Down (Offline)",
+       status_code: error.response.status,
        info_error: null,
        github: "https://github.com/ThisMe124/Website-Checker"
      })
   } else if (error.code === 'ECONNABORTED') {
      res.json({ 
-       status: 'timeout', 
-       status_code: null, 
+       status: 'timeout',
+       response: "Website is Down (Offline)",
+       status_code: null,
        info_error: error.message
      })
   } else {
      res.json({ 
-       status: 'Unknow Error', 
-       status_code: null, 
+       status: 'Unknow Error',
+       response: " Website is Down (Offline)",
+       status_code: null,
        info_error: 
        error.message
      })
